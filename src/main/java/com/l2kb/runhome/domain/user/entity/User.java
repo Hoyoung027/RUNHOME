@@ -23,9 +23,6 @@ public class User extends BaseEntity {
     @Column(length = 4)
     private String password;
 
-    @Column(length = 50)
-    private String location;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team favoriteTeam;
@@ -39,10 +36,6 @@ public class User extends BaseEntity {
 
     public void updateFavoriteTeam(Team team) {
         this.favoriteTeam = team;
-    }
-
-    public void updateLocation(String location) {
-        this.location = location;
     }
 
     public boolean matchesPassword(String input) {

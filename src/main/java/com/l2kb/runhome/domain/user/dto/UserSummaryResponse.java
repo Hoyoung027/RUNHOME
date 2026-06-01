@@ -2,14 +2,14 @@ package com.l2kb.runhome.domain.user.dto;
 
 import com.l2kb.runhome.domain.user.entity.User;
 
-public record UserResponse(
+public record UserSummaryResponse(
         Long id,
         String nickname,
         Long favoriteTeamId,
         String favoriteTeamName
 ) {
-    public static UserResponse from(User user) {
-        return new UserResponse(
+    public static UserSummaryResponse from(User user) {
+        return new UserSummaryResponse(
                 user.getId(),
                 user.getNickname(),
                 user.getFavoriteTeam() != null ? user.getFavoriteTeam().getId() : null,

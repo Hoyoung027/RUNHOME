@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @Tag(name = "User", description = "사용자 관련 API")
 @RestController
@@ -36,6 +37,12 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.ok(userService.login(request)));
     }
 
+    @Operation(summary = "전체 프로필 조회", description = "모든 사용자의 닉네임과 선호 구단을 조회합니다.")
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<UserSummaryResponse>>> getAllUsers() {
+        return ResponseEntity.ok(ApiResponse.ok(userService.getAllUsers()));
+    }
+
     @Operation(summary = "내 정보 조회", description = "로그인한 사용자의 정보를 조회합니다.")
     @Parameter(name = "X-User-Id", in = ParameterIn.HEADER, description = "요청 사용자 ID", required = true)
     @GetMapping("/me")
@@ -53,11 +60,4 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.ok(userService.updateFavoriteTeam(userId, request)));
     }
 
-    @Operation(summary = "위치 변경", description = "사용자의 위치 정보를 변경합니다.")
-    @PatchMapping("/me/location")
-    public ResponseEntity<ApiResponse<UserResponse>> updateLocation(
-            @RequestHeader("X-User-Id") Long userId,
-            @RequestBody UserUpdateLocationRequest request) {
-        return ResponseEntity.ok(ApiResponse.ok(userService.updateLocation(userId, request)));
-    }
 }

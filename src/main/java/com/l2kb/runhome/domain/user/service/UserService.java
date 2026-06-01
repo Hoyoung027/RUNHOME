@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -25,9 +27,6 @@ public class UserService {
             throw new BusinessException(ErrorCode.DUPLICATE_NICKNAME);
         }
         User user = User.of(request.nickname(), request.password());
-        if (request.location() != null) {
-            user.updateLocation(request.location());
-        }
         if (request.teamId() != null) {
             Team team = teamRepository.findById(request.teamId())
                     .orElseThrow(() -> new BusinessException(ErrorCode.TEAM_NOT_FOUND));
@@ -43,6 +42,12 @@ public class UserService {
             throw new BusinessException(ErrorCode.INVALID_PASSWORD);
         }
         return new UserLoginResponse(user.getId(), user.getNickname());
+    }
+
+    public List<UserSummaryResponse> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(UserSummaryResponse::from)
+                .toList();
     }
 
     public UserResponse getUser(Long userId) {
@@ -61,11 +66,4 @@ public class UserService {
         return UserResponse.from(user);
     }
 
-    @Transactional
-    public UserResponse updateLocation(Long userId, UserUpdateLocationRequest request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        user.updateLocation(request.location());
-        return UserResponse.from(user);
-    }
 }
