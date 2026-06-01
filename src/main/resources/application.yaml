@@ -1,10 +1,14 @@
+server:
+  address: 0.0.0.0
+  port: ${PORT:8080}
+
 spring:
   application:
     name: runhome
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:3306/runhome?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${MYSQLHOST:${DB_HOST:localhost}}:${MYSQLPORT:3306}/${MYSQLDATABASE:runhome}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${MYSQLUSER:${DB_USERNAME:root}}
+    password: ${MYSQLPASSWORD:${DB_PASSWORD}}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     open-in-view: false
