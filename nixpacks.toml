@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ["./gradlew clean bootJar"]
+
+[start]
+cmd = "java -jar build/libs/runhome-0.0.1-SNAPSHOT.jar"
