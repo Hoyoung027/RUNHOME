@@ -52,4 +52,14 @@ public class Team extends BaseEntity {
         team.secondaryColor = secondaryColor;
         return team;
     }
+
+    public void update(String name, String shortName, String homeCity,
+                       String stadiumName, String primaryColor, String secondaryColor) {
+        this.name = name;
+        this.shortName = shortName;
+        this.homeCity = homeCity;
+        this.stadiumName = stadiumName;
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
+    }
 }
