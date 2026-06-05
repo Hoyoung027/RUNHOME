@@ -66,4 +66,16 @@ public class UserService {
         return UserResponse.from(user);
     }
 
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        userRepository.delete(user);
+    }
+
+    @Transactional
+    public void deleteAllUsers() {
+        userRepository.deleteAll();
+    }
+
 }

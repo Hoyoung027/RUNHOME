@@ -60,4 +60,20 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.ok(userService.updateFavoriteTeam(userId, request)));
     }
 
+    @Operation(summary = "회원 탈퇴", description = "로그인한 사용자를 삭제합니다.")
+    @Parameter(name = "X-User-Id", in = ParameterIn.HEADER, description = "요청 사용자 ID", required = true)
+    @DeleteMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> deleteUser(
+            @RequestHeader("X-User-Id") Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok(ApiResponse.ok(null));
+    }
+
+    @Operation(summary = "전체 사용자 삭제", description = "모든 사용자를 삭제합니다.")
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<Void>> deleteAllUsers() {
+        userService.deleteAllUsers();
+        return ResponseEntity.ok(ApiResponse.ok(null));
+    }
+
 }
